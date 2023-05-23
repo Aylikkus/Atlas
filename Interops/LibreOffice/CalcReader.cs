@@ -196,8 +196,6 @@ namespace Atlas.Interops.LibreOffice
             da.Competentions = allComps;
             da.Disciplines = disciplines;
 
-            int x = 0;
-
             return da;
         }
     }
