@@ -3,6 +3,7 @@ using Atlas.Interops.LibreOffice;
 using Atlas.Interops.Office;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,12 @@ namespace Atlas
             string pwd = Environment.CurrentDirectory;
             string prjFolder = pwd.Remove(pwd.IndexOf("Atlas") + 6);
             DocAttributes da = new DocAttributes();
+
             using (CalcReader cr = new CalcReader())
                 da = cr.PullAttributes(prjFolder + @"Reference\10.05.04___2021_56_.plx.xlsx");
+
+            using (WriterGenerator wg = new WriterGenerator())
+                wg.GenerateDocs(da, prjFolder + @"Reference\Макет.docx");
         }
     }
 }
