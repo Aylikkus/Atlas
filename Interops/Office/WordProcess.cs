@@ -14,8 +14,6 @@ namespace Atlas.Interops.Office
         Dictionary<string, string> _tagsDisc;
         Discipline _disc;
 
-        string _tempPath;
-
         Document _template;
         Selection _selection;
         Find _find;
@@ -58,7 +56,7 @@ namespace Atlas.Interops.Office
                 _tagsComm["<SPECIALIZATION>"].Substring(0, 8), _tagsComm["<PROFILEABBR>"].ToLowerInvariant(),
                 _tagsComm["<FORM>"][0], _disc.Code, _disc.Abbrevation);
 
-            return Path.Combine(_template.Path, fileName + ".docx");
+            return Path.Combine(Environment.CurrentDirectory, "Output", fileName + ".docx");
         }
 
         void formatCompTable()
@@ -141,14 +139,16 @@ namespace Atlas.Interops.Office
             }
         }
 
-        public WordProcess(Dictionary<string, string> tagsComm, Dictionary<string, string> tagsDisc,
-            Discipline disc, string tempPath, Document template)
+        public WordProcess(
+            Dictionary<string, string> tagsComm, 
+            Dictionary<string, string> tagsDisc, 
+            Discipline disc, 
+            Document template)
         {
             _tagsComm = tagsComm;
             _tagsDisc = tagsDisc;
             _disc = disc;
             _template = template;
-            _tempPath = tempPath;
         }
 
         public void Process(Application app)
