@@ -15,6 +15,8 @@ using unoidl.com.sun.star.sheet;
 using unoidl.com.sun.star.table;
 using unoidl.com.sun.star.text;
 using unoidl.com.sun.star.uno;
+using unoidl.com.sun.star.util;
+using unoidl.com.sun.star.xml.dom;
 
 namespace Atlas.Interops.LibreOffice
 {
@@ -22,11 +24,6 @@ namespace Atlas.Interops.LibreOffice
     {
         XComponentContext xContext = Bootstrap.bootstrap();
         XComponent xComp;
-
-        public void Dispose()
-        {
-            xComp.dispose();
-        }
 
         void parseLessonCell(string cellCnt, int sem, ref WorkInfo les, in SemesterInfo si)
         {
@@ -54,7 +51,7 @@ namespace Atlas.Interops.LibreOffice
             return discComps;
         }
 
-        private void loadLibreOffice(string pathToFile)
+        void loadCalc(string pathToFile)
         {
             XMultiComponentFactory xMCF = xContext.getServiceManager();
             object oDesktop = xMCF.createInstanceWithContext("com.sun.star.frame.Desktop", xContext);
@@ -81,7 +78,7 @@ namespace Atlas.Interops.LibreOffice
 
         public DocAttributes PullAttributes(string pathToFile)
         {
-            loadLibreOffice(pathToFile);
+            loadCalc(pathToFile);
 
             // Нумерация листов с нуля, ячеек тоже
             XSpreadsheet titul = getByIndex(0);
@@ -115,7 +112,6 @@ namespace Atlas.Interops.LibreOffice
 
             // План
             XSpreadsheet plan = getByIndex(3);
-
             List<Discipline> disciplines = new List<Discipline>(128);
             for (int discRow = 1; discRow < 1000; discRow++)
             {
@@ -152,16 +148,20 @@ namespace Atlas.Interops.LibreOffice
                     // Лекции, Лабы, Практики, Сам.Работы, Контроль
                     WorkInfo[] lesInfos = new WorkInfo[5];
 
-                    
                     for (int j = 17, s = 1; 
                         plan.getCellByPosition(j, 2).getFormula() == "з.е." && s <= 16; 
                         j += 7, s++)
                     {
-                        parseLessonCell(plan.getCellByPosition(j + 2, 2).getFormula(), s, ref lesInfos[0], si);
-                        parseLessonCell(plan.getCellByPosition(j + 3, 2).getFormula(), s, ref lesInfos[1], si);
-                        parseLessonCell(plan.getCellByPosition(j + 4, 2).getFormula(), s, ref lesInfos[2], si);
-                        parseLessonCell(plan.getCellByPosition(j + 5, 2).getFormula(), s, ref lesInfos[3], si);
-                        parseLessonCell(plan.getCellByPosition(j + 6, 2).getFormula(), s, ref lesInfos[4], si);
+                        parseLessonCell(plan.getCellByPosition(j + 2, discRow).getFormula()
+                            .Trim(new char[] { '\'', ' ', '\"' }), s, ref lesInfos[0], si);
+                        parseLessonCell(plan.getCellByPosition(j + 3, discRow).getFormula()
+                            .Trim(new char[] { '\'', ' ', '\"' }), s, ref lesInfos[1], si);
+                        parseLessonCell(plan.getCellByPosition(j + 4, discRow).getFormula()
+                            .Trim(new char[] { '\'', ' ', '\"' }), s, ref lesInfos[2], si);
+                        parseLessonCell(plan.getCellByPosition(j + 5, discRow).getFormula()
+                            .Trim(new char[] { '\'', ' ', '\"' }), s, ref lesInfos[3], si);
+                        parseLessonCell(plan.getCellByPosition(j + 6, discRow).getFormula()
+                            .Trim(new char[] { '\'', ' ', '\"' }), s, ref lesInfos[4], si);
                     }
 
                     
@@ -197,6 +197,12 @@ namespace Atlas.Interops.LibreOffice
             da.Disciplines = disciplines;
 
             return da;
+        }
+
+        public void Dispose()
+        {
+            (xComp as XCloseable).close(true);
+            (xContext as XDesktop)?.terminate();
         }
     }
 }
