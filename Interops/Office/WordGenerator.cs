@@ -116,7 +116,7 @@ namespace Atlas.Interops.Office
 
 
                 WordProcess wp = new WordProcess(tagsCommon, tagsDiscipline,
-                    attrs.Disciplines[i], templ.FullName, _template);
+                    attrs.Disciplines[i], _template);
 
                 wp.Process(_app);
             };
