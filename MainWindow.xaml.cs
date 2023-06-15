@@ -154,6 +154,7 @@ namespace Atlas
         {
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == false) return;
+            bool error = false;
             stopBtn.IsEnabled = true;
             stopBtn.Visibility = Visibility.Visible;
             tokenSource.Token.Register(() =>
@@ -173,7 +174,14 @@ namespace Atlas
                 {
                     Thread thread = new Thread(() =>
                     {
-                        options.DocGenerator.GenerateDocs(attributes, dialog.FileName);
+                        try
+                        {
+                            options.DocGenerator.GenerateDocs(attributes, dialog.FileName);
+                        }
+                        catch
+                        {
+                            error = true;
+                        }
                     });
                     thread.Start();
                     while (true)
@@ -181,6 +189,8 @@ namespace Atlas
                         Thread.Sleep(1000);
                         if (thread.ThreadState == ThreadState.Stopped)
                         {
+                            if (error)
+                                throw new Exception();
                             break;
                         }
                         if (tokenSource.IsCancellationRequested)
