@@ -5,9 +5,12 @@ using System.Globalization;
 using Microsoft.Office.Interop.Excel;
 
 using Atlas.Data;
+using System.Runtime.Serialization;
+using Formatter = Atlas.Data.Formatter;
 
 namespace Atlas.Interops.Office
 {
+    [DataContract]
     public class ExcelReader : IDocReader, IDisposable
     {
         Application _app;

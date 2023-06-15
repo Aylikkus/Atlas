@@ -7,14 +7,18 @@ using System.Runtime.InteropServices;
 
 using Atlas.Data;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Atlas.Interops.Office
 {
+    [DataContract]
     public class WordGenerator : IDocGenerator, IDisposable
     {
         Application _app;
         Documents _documents;
         Document _template;
+
+        public event Action<int> DisciplineFinished;
 
         string formatSemArray(int[] arr)
         {
@@ -119,6 +123,7 @@ namespace Atlas.Interops.Office
                     attrs.Disciplines[i], _template);
 
                 wp.Process(_app);
+                DisciplineFinished?.Invoke(i + 1);
             };
         }
 

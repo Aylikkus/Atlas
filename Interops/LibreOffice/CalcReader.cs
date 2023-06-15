@@ -4,6 +4,7 @@ using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Documents;
 using uno.util;
@@ -17,9 +18,11 @@ using unoidl.com.sun.star.text;
 using unoidl.com.sun.star.uno;
 using unoidl.com.sun.star.util;
 using unoidl.com.sun.star.xml.dom;
+using Formatter = Atlas.Data.Formatter;
 
 namespace Atlas.Interops.LibreOffice
 {
+    [DataContract]
     public class CalcReader : IDocReader, IDisposable
     {
         XComponentContext xContext = Bootstrap.bootstrap();

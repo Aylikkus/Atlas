@@ -1,0 +1,26 @@
+﻿<Window x:Class="Atlas.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Atlas"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="450" Width="800" WindowStyle="ToolWindow" Closed="Window_Closed">
+    <Grid Background="#FF81C487">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Width="200" HorizontalAlignment="Left" Background="#FF262626">
+            <TextBox x:Name="surnameField" Margin="25,21,25,0" Height="30" Padding="10,0,0,0" VerticalAlignment="Top" Background="#FF262626" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" FontStretch="Expanded" TextWrapping="Wrap" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" Text="Фамилия" SelectionBrush="#FFEFEFEF" GotFocus="field_GotFocus"/>
+            <TextBox x:Name="nameField" Margin="25,21,25,0" Height="30" Padding="10,0,0,0" VerticalAlignment="Top" Background="#FF262626" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" FontStretch="Expanded" TextWrapping="Wrap" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" Text="Имя" SelectionBrush="#FFEFEFEF" GotFocus="field_GotFocus"/>
+            <TextBox x:Name="patronymicField" Margin="25,21,25,0" Height="30" Padding="10,0,0,0" VerticalAlignment="Top" Background="#FF262626" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" FontStretch="Expanded" TextWrapping="Wrap" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" Text="Отчество" SelectionBrush="#FFEFEFEF" GotFocus="field_GotFocus"/>
+            <Button x:Name="confirmBtn" Content="Подтвердить" Margin="25,21,25,0" Height="30" Background="#FF00A821" Padding="0,0,0,0" Foreground="#FFEFEFEF" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" FontFamily="Arial" FontWeight="Bold" Click="confirmBtn_Click" HorizontalContentAlignment="Center"/>
+        </StackPanel>
+        <Image Margin="0,1,0,0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Source="/Media/logo.png" Height="694" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</Window>

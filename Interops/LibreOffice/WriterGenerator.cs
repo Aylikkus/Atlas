@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using uno.util;
 using unoidl.com.sun.star.beans;
@@ -18,10 +19,13 @@ using unoidl.com.sun.star.xml.sax;
 
 namespace Atlas.Interops.LibreOffice
 {
+    [DataContract]
     public class WriterGenerator : IDocGenerator, IDisposable
     {
         XComponentContext xContext = Bootstrap.bootstrap();
         XComponent xComp;
+
+        public event Action<int> DisciplineFinished;
 
         string formatSemArray(int[] arr)
         {
@@ -295,6 +299,7 @@ namespace Atlas.Interops.LibreOffice
                 formatDiscThemes(attrs.Disciplines[i]);
 
                 saveAndCloseWriter(tagsCommon, attrs.Disciplines[i]);
+                DisciplineFinished?.Invoke(i + 1);
             };
         }
 

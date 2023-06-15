@@ -1,12 +1,82 @@
-﻿<Window x:Class="Atlas.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atlas"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Atlas.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Атлас" Height="450" Width="800" Icon="/Media/logo.png">
+    <Grid Background="#FF81C487">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Hidden">
+            <StackPanel Background="#FF262626" CanVerticallyScroll="True">
+                <TextBlock x:Name="personBlock" Margin="30,30,30,0" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" MouseDown="personBlock_MouseDown"/>
+                <Grid Margin="10,21,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Степень"/></TextBlock>
+                    <TextBox x:Name="degreeField" Height="30" Padding="10,0,0,0" VerticalAlignment="Top" Background="#FF262626" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" FontStretch="Expanded" TextWrapping="Wrap" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" Text="{Binding Degree, Source={x:Static local:Options.Instance}}" SelectionBrush="#FFEFEFEF" Grid.Column="1"/>
+                </Grid>
+                <Grid Margin="10,21,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Звание"/></TextBlock>
+                    <TextBox x:Name="titleField" Height="30" Padding="10,0,0,0" VerticalAlignment="Top" Background="#FF262626" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" FontStretch="Expanded" TextWrapping="Wrap" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" Text="{Binding Title, Source={x:Static local:Options.Instance}}" SelectionBrush="#FFEFEFEF" Grid.Column="1"/>
+                </Grid>
+                <Grid Margin="10,21,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Должность"/></TextBlock>
+                    <TextBox x:Name="jobField" Height="30" Padding="10,0,0,0" VerticalAlignment="Top" Background="#FF262626" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" FontStretch="Expanded" TextWrapping="Wrap" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" Text="{Binding Job, Source={x:Static local:Options.Instance}}" SelectionBrush="#FFEFEFEF" Grid.Column="1"/>
+                </Grid>
+                <Grid Margin="10,21,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Чтение"/></TextBlock>
+                    <ComboBox x:Name="readerBox" Background="#FF00A821" BorderBrush="#FF00A821" Foreground="#FF262626" Grid.Column="1" FontFamily="Arial" FontSize="11" FontWeight="Bold" SelectionChanged="readerBox_SelectionChanged">
+                        <System:String>LibreOffice</System:String>
+                        <System:String>MSOffice</System:String>
+                    </ComboBox>
+                </Grid>
+                <Grid Margin="10,21,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Генерация"/></TextBlock>
+                    <ComboBox x:Name="generatorBox" Background="#FF00A821" BorderBrush="#FF00A821" Foreground="#FF262626" Grid.Column="1" FontFamily="Arial" FontSize="11" FontWeight="Bold" SelectionChanged="generatorBox_SelectionChanged">
+                        <System:String>LibreOffice</System:String>
+                        <System:String>MSOffice</System:String>
+                    </ComboBox>
+                </Grid>
+                <Button x:Name="saveBtn" Margin="30,30,30,0" Background="#FF00A821" Content="Сохранить" Padding="0,0,0,0" Foreground="#FFEFEFEF" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" FontFamily="Arial" FontWeight="Bold" Height="30" Click="saveBtn_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Hidden">
+            <StackPanel x:Name="controlsPanel" Background="#FF262626" CanVerticallyScroll="True" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <Button x:Name="readBtn" Margin="25,30,25,0" Background="#FF00A821" Content="Считать учебный план" Padding="0,0,0,0" Foreground="#FFEFEFEF" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" FontFamily="Arial" FontWeight="Bold" Height="30" Click="readBtn_Click"/>
+                <TextBlock x:Name="statsBlock" Margin="30,30,30,0" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Justify" TextWrapping="Wrap" FontSize="10" Visibility="Collapsed"/>
+                <Button x:Name="generateBtn" Margin="25,30,25,0" Background="#FF00A821" Content="Сгенерировать РПД" Padding="0,0,0,0" Foreground="#FFEFEFEF" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" FontFamily="Arial" FontWeight="Bold" Height="30" Click="generateBtn_Click" IsEnabled="False"/>
+                <TextBlock x:Name="progressBlock" Margin="30,5,30,0" Foreground="#FFEFEFEF" FontFamily="Arial" FontWeight="Bold" TextAlignment="Right" TextWrapping="Wrap" FontSize="10" Visibility="Collapsed"/>
+                <Button x:Name="stopBtn" Margin="25,30,25,15" Background="#FF00A821" Content="Остановить" Padding="0,0,0,0" Foreground="#FFEFEFEF" VerticalContentAlignment="Center" BorderBrush="#FF00A821" FontSize="11" FontFamily="Arial" FontWeight="Bold" Height="30" IsEnabled="False" Visibility="Collapsed" Click="stopBtn_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+        <Image Margin="0,1,0,0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Source="/Media/logo.png" Height="694"/>
     </Grid>
 </Window>
